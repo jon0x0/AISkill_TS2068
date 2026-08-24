@@ -1,0 +1,4 @@
+interface:
+  display_name: "TS2068 Cartridge Development"
+  short_description: "Build and debug TS2068 cartridge software"
+  default_prompt: "Use $ts2068-cartridge-development to design and validate a TS2068 cartridge memory and banking architecture."
