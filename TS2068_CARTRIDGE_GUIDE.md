@@ -15,7 +15,7 @@ The safest way to think about TS2068 cartridge programming is as memory-map desi
 The CPU can encounter three memory sources:
 
 - **HOME** is the TS2068's internal ROM and random-access memory (RAM).
-- **DOCK** is the external cartridge space.
+- **DOCK**, called the **Dock (Cartridge) Bank** by the TS2068 Technical Reference Manual, is the external cartridge memory bank. It can supply up to 64K as eight fixed 8K chunks. Dock is a name, not an acronym.
 - **Extension ROM ([EXROM](TS2068_CARTRIDGE_GLOSSARY.md#exrom "Extension ROM"))** is the supplementary ROM bank. The factory machine populates 8K, while a 16K implementation can occupy its first two chunks.
 
 The Z80 still sees only one 64K address space. Hardware selects which source responds within each 8K address range.

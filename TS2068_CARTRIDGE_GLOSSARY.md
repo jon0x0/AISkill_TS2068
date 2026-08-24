@@ -34,7 +34,7 @@ One fixed 8K section of the Z80 address space. The TS2068 has chunks 0 through 7
 
 ## DOCK
 
-The TS2068 external cartridge bank. Native DOCK space is 64K arranged as eight fixed 8K chunks. DOCK is a bank name, not an acronym requiring expansion.
+The **Dock (Cartridge) Bank**, the name used by the *Timex Sinclair 2068 Technical Reference Manual* for the external memory bank supplied through the cartridge connector. It provides up to 64K of addressable cartridge memory, arranged as eight fixed 8K chunks corresponding to the Z80's eight address-space chunks. HSR selects which chunks replace the same-address HOME chunks, while DECR bit 7 must be clear to choose Dock rather than EXROM. **Dock is a bank name, not an acronym requiring expansion.** See the [Technical Reference Manual, section 1.1.1, PDF page 7](https://github.com/timex-sinclair-projects/TS2068-Ref-Library/blob/main/docs/Timex%20Sinclair%202068%20Technical%20Manual%20%28best%29.pdf).
 
 ## ECM
 

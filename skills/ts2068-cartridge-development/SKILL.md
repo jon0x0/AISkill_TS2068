@@ -23,6 +23,7 @@ For broader TS2068 programming information beyond cartridge mechanics, consult [
 
 ## Apply the core model
 
+- Use **DOCK** for the Technical Reference Manual's **Dock (Cartridge) Bank**, the external bank supplied through the cartridge connector. Treat Dock as a bank name, not an acronym.
 - Divide `$0000-$FFFF` into chunks 0-7, each `$2000` bytes.
 - Write HSR port `$F4`: bit N=1 selects external chunk N; bit N=0 selects HOME chunk N.
 - Use DECR port `$FF` bit 7 to choose which external bank HSR selects: 0=DOCK cartridge, 1=EXROM. Preserve the video mode and interrupt-inhibit bits.

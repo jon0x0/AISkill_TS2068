@@ -8,7 +8,7 @@ Core acronyms: **HSR** = Horizontal Select Register; **DECR** = Display Enhancem
 - **CPU — central processing unit:** the Z80; HSR controls its memory view but not the SCLD display-fetch source.
 - **DCK — Fuse cartridge-image format:** conventional name and `.dck` extension for Fuse's descriptor-based Timex cartridge container; do not assume a longer official expansion.
 - **DECR — Display Enhancement Control Register:** write-only port `$FF`; controls video, interrupt inhibition, and DOCK/EXROM selection.
-- **DOCK:** external cartridge bank; a bank name rather than an acronym.
+- **DOCK / Dock (Cartridge) Bank:** the Technical Reference Manual's name for the external memory bank supplied through the cartridge connector. It provides up to 64K as eight fixed 8K chunks selected over corresponding HOME chunks. Dock is a bank name, not an acronym. See section 1.1.1, PDF page 7 of the [manual](https://github.com/timex-sinclair-projects/TS2068-Ref-Library/blob/main/docs/Timex%20Sinclair%202068%20Technical%20Manual%20%28best%29.pdf).
 - **ECM — Extended Color Mode:** TS2068 pixel-plus-color display mode using both HOME display files.
 - **EXROM — Extension ROM:** supplementary external ROM bank selected globally instead of cartridge DOCK by DECR bit 7. Factory U20 supplies 8K at EXROM `$0000-$1FFF` (chunk 0); a verified 16K implementation can also supply `$2000-$3FFF` (chunk 1), with HSR=`$03` selecting both. Do not assume the second chunk exists in a stock machine.
 - **FIFO — first in, first out:** here, a logical sequential stream over ordered cartridge/RAM segments, advanced by explicit bank-boundary commands; not a hardware FIFO.
