@@ -50,6 +50,7 @@ Do not map away the chunk containing the current program counter (PC), stack, re
 - Follow [utilities.md](references/utilities.md) for exact CLI syntax, descriptor semantics, debugger-command examples, template adaptation, and verification behavior.
 - Use `scripts/pack_dck.py` to package exact 8K chunk images or a flat 64K image.
 - Use `scripts/inspect_dck.py` to verify descriptors, stored chunk order, headers, hashes, and flat-image expansion.
+- Use `scripts/dck_to_picorom.py` to convert a sparse DCK into one contiguous 64K physical ROM image with explicit fill bytes.
 - Use external [zx81-utils `dckls`](https://github.com/ryangray/zx81-utils) with `-d` to extract stored contiguous ROM/RAM spans. Do not mistake sparse extracted spans for a padded 64K physical image.
 - Use the external [TS2068 TAP to Cartridge Builder](https://timex-sinclair-projects.github.io/2068-TAP-To-Cart/) or its `tapToCart.py` command-line version for TS2068 BASIC TAP programs. Do not treat it as an automatic Spectrum machine-code porting tool.
 - Use [Retro Pixel Converter](https://factus10.github.io/retro-pixel-converter/) to author Timex Extended Color bitmap and 8×1 attribute planes. Verify the two 6144-byte outputs independently and let the cartridge map—not their TAP order or load addresses—determine ROM placement.

@@ -138,7 +138,37 @@ Local sources:
 
 - `cartridgeconversion/berserk/docs/picorom28-home-ram-2026-09-02.md`
 - `cartridgeconversion/berserk/scripts/make_dck.py`
-- `cartridgeconversion/berserk/scripts/dck_to_picorom.py`
+- `skills/ts2068-cartridge-development/scripts/dck_to_picorom.py`
+
+### Build the contiguous PicoROM image
+
+`dckls -d` is an inspection/extraction tool, not a reliable DCK-to-physical-BIN
+converter. For this sparse Berzerk DCK it emits two files: one contiguous ROM
+span beginning at `$0000` for chunks 0-5 and another beginning at `$E000` for
+chunk 7. It does not insert the missing 8K chunk at `$C000-$DFFF`, so neither
+dump alone is the 64K image expected by PicoROM28.
+
+Run the cartridge skill's bundled converter by its complete path (shown here
+relative to the skill directory) to build the exact flat image:
+
+```powershell
+python scripts/dck_to_picorom.py berzerk.dck berzerk-picorom-512Kbit-patched.bin
+```
+
+The converter strictly parses the DCK descriptors, places each stored chunk at
+its natural `chunk * $2000` offset, fills absent or uninitialised-RAM chunks
+with `$FF`, rejects truncated payloads, unknown descriptors, and trailing
+bytes, and writes exactly 65,536 bytes. For the verified Berzerk layout the
+result is ROM data at `$0000-$BFFF`, `$FF` at `$C000-$DFFF`, and ROM data at
+`$E000-$FFFF`.
+
+The inspection-oriented equivalent is:
+
+```powershell
+python scripts/inspect_dck.py berzerk.dck --flat-output berzerk-picorom.bin --fill 0xFF
+```
+
+Whichever converter is used, verify the output length and hash before upload.
 
 ## Direct video-mode control from a cartridge
 
