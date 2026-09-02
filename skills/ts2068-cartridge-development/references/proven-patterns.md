@@ -103,11 +103,42 @@ Local examples:
 - `cartridges/VU3D-rom.bin`
 - `cartridges/VU3D256Kbit.bin`
 
-## Berzerk: cartridge ROM plus DCK RAM
+## Berzerk: resident ROM plus same-address HOME workspace
 
-Use DCK descriptor 1 or 3 when an emulator test genuinely needs writable cartridge RAM. Keep this distinct from HOME RAM and from physical ROM output. A write to descriptor-2 ROM silently fails.
+The PicoROM28-verified Berzerk build executes from DOCK chunk 4 while keeping
+HSR bit 6 clear. Native HOME RAM therefore supplies `$C000-$DFFF` without
+relocating any addresses. That range holds the 257-byte IM2 table at
+`$C000-$C100`, the ISR stub at `$C0C0` or `$C1C1`, scheduler state at
+`$DFF0-$DFF3`, and coroutine nodes/stacks growing downward below `$DFF0`.
 
-Local source: `cartridgeconversion/berserk/scripts/make_dck.py`.
+This pattern is useful when a program was first tested with a writable DCK
+chunk but the physical cartridge is ROM-only:
+
+- change the resident HSR baseline from `$50` (DOCK 4+6) to `$10` (DOCK 4);
+- make DCK chunk 6 absent so Fuse exercises HOME RAM like the real machine;
+- keep the physical image contiguous and fill its unused chunk-6 ROM slot
+  normally (for example with `$FF`); the bytes remain physically present but
+  are not CPU-visible while HSR bit 6 is zero;
+- audit every `$F4` writer, including literal temporary masks. Berzerk also
+  required `$D0->$90` for DOCK7 access and `$70->$30` for DOCK5 access so
+  neither transition mapped ROM over the live HOME stack;
+- verify that interrupt vectors, ISR code, stack, return addresses, and all
+  temporary-bank paths remain valid before assuming the baseline change alone
+  is sufficient.
+
+Do not infer that RAM usage is small from absolute-reference scans. Berzerk's
+obvious `$DFF0-$DFF3` operands represented only fixed scheduler state; most of
+the chunk was accessed indirectly through SP, HL, IX, and IY.
+
+Use DCK descriptor 1 or 3 only when an emulator test genuinely requires
+writable *cartridge* RAM and the intended physical hardware implements it.
+A flat ROM/PicoROM image never becomes writable from its DCK descriptor.
+
+Local sources:
+
+- `cartridgeconversion/berserk/docs/picorom28-home-ram-2026-09-02.md`
+- `cartridgeconversion/berserk/scripts/make_dck.py`
+- `cartridgeconversion/berserk/scripts/dck_to_picorom.py`
 
 ## Direct video-mode control from a cartridge
 

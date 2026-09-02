@@ -9,7 +9,7 @@
 5. Confirm Application ROM-Oriented Software (AROS) or Language ROM-Oriented Software (LROS) header type, entry, chunk specification, autostart, and reserve values.
 6. Confirm the flat physical binary is exactly the hardware-required size and reconstructs the intended chunk images.
 7. Validate every generated bank/address/length table against payload placement.
-8. Scan assembly for every `$F4` and `$FF` write and document the expected program counter (PC), stack pointer (SP), interrupt-service routine (ISR), ROM, display, and destination visibility after it.
+8. Scan assembly for every `$F4` and `$FF` write and document the expected program counter (PC), stack pointer (SP), interrupt-service routine (ISR), ROM, display, and destination visibility after it. Inspect literal masks as well as writes derived from the normal HSR/DECR shadows; temporary copy, title, audio, and error paths commonly bypass the baseline.
 
 ## Deterministic Fuse validation
 

@@ -345,3 +345,11 @@ The native DOCK interface exposes enough address lines and chip-select signals f
 - smart cartridges larger than 64K need their own paging register/protocol; native HSR alone addresses only the eight fixed DOCK chunks.
 
 Generate both a DCK for Fuse and the exact flat image expected by the physical programmer. Verify byte order, erased fill, electrical mapping, and whether the hardware expects 8K, 16K, 32K, or 64K output.
+
+Some ROM programmers require a contiguous physical image containing every
+decoded 8K slot. That does not require software to select every slot. A 64K
+PicoROM image may contain an `$FF`-filled chunk 6 while HSR bit 6 remains zero,
+so CPU accesses at `$C000-$DFFF` reach writable HOME RAM instead. The physical
+ROM bytes exist at their natural offsets but remain hidden. This arrangement
+was verified on PicoROM28 with Berzerk; its matching Fuse DCK marks chunk 6
+absent rather than pretending that the ROM board supplies writable RAM.
