@@ -1,5 +1,6 @@
 # TS2068 Cartridge Development Glossary
 
+**When to read:** Use to interpret TS2068 bank, register, file-format and Z80 terminology. For audio conversion and playback experience, see [audio development](TS2068_AUDIO_GUIDE.md); for browser cartridge demos, see [TSRun embedding](TS2068_BROWSER_DEMOS.md).
 This glossary collects the cartridge, memory, display, file-format, and Z80 terms used throughout this library.
 
 Core acronyms at a glance: **HSR** means Horizontal Select Register; **DECR** means Display Enhancement Control Register; **SCLD** means Standard Cell Logic Device; **AROS** means Application ROM-Oriented Software; **LROS** means Language ROM-Oriented Software; and **EXROM** means Extension ROM. **DCK** is treated as Fuse's conventional cartridge-format name and `.dck` extension because the available documentation does not establish a longer official expansion.

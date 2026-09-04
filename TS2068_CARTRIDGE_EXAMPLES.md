@@ -1,5 +1,6 @@
 # Worked TS2068 Cartridge Examples and Memory Maps
 
+**When to read:** Use for concrete Elite and TSVideoCodec memory maps, resident code and data-transfer patterns. For audio conversion and playback experience, see [audio development](TS2068_AUDIO_GUIDE.md); for browser cartridge demos, see [TSRun embedding](TS2068_BROWSER_DEMOS.md).
 These examples show two different ways to organize a full-size Timex Sinclair 2068 cartridge. Elite is a compatibility-oriented copy-and-run conversion of the ZX Spectrum Elite JCV tape program (`ELITEJCV.TAP`): its launcher and media begin in cartridge ROM, but the protected Spectrum program is reconstructed in HOME RAM and runs there. TSVideoCodec is a streaming cartridge: its player and decoders execute directly from cartridge chunk 4 while compressed media is selected from the other seven chunks.
 
 Addresses below are Z80 addresses after a chunk is selected, not offsets in a DCK file. A flat 64K physical cartridge uses the same numerical offset as the chunk's fixed CPU address. See the [glossary](TS2068_CARTRIDGE_GLOSSARY.md) for HOME, DOCK, EXROM, HSR, DECR, ECM, and SCLD.

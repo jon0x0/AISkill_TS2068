@@ -7,6 +7,10 @@ This directory is the collection point for reusable AI skills related to the Tim
 | Skill | Purpose |
 |---|---|
 | [`ts2068-cartridge-development`](ts2068-cartridge-development/SKILL.md) | Design, build, inspect, port, and debug TS2068 DOCK cartridges, including banking, HOME-RAM transfers, AROS/LROS, ECM media, DCK/BIN creation, and deterministic Fuse validation. |
+| [`ts2068-audio-development`](ts2068-audio-development/SKILL.md) | Convert speech/effects to packed DAC or harmonic AY, optimize parameters, build selectable demos and integrate callable playback. |
+| [`ts2068-tsrun-web-demo`](ts2068-tsrun-web-demo/SKILL.md) | Embed live TSRun modules, automatically load DCKs, handle browser audio/keys and publish GitHub Pages demos. |
+
+Audio tools are maintained in [speech2ay](https://github.com/jon0x0/speech2ay). Load the audio skill for conversion/player work and the TSRun skill for browser integration; cartridge banking remains in the cartridge skill.
 
 ## Companion skill and reference trees
 

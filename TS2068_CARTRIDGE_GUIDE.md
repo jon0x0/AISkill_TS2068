@@ -1,5 +1,6 @@
 # Developing Cartridge Software for the Timex Sinclair 2068
 
+**When to read:** Use for cartridge architecture, bank selection, BASIC versus machine-code startup and project planning. For audio conversion and playback experience, see [audio development](TS2068_AUDIO_GUIDE.md); for browser cartridge demos, see [TSRun embedding](TS2068_BROWSER_DEMOS.md).
 See the [glossary](TS2068_CARTRIDGE_GLOSSARY.md) for the complete definitions of acronyms and specialized terms used here.
 
 ## Introduction

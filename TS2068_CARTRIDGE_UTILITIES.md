@@ -1,5 +1,6 @@
 # Utilities for TS2068 Cartridge Development
 
+**When to read:** Use for DCK/BIN tools, validation commands, Fuse automation and reusable assembly templates. For audio conversion and playback experience, see [audio development](TS2068_AUDIO_GUIDE.md); for browser cartridge demos, see [TSRun embedding](TS2068_BROWSER_DEMOS.md).
 The cartridge-development skill includes small, dependency-free Python utilities for creating and checking Fuse DCK cartridge images, expanding them into physical 64K binaries, and running deterministic Fuse debugger sessions. It also includes two Pasmo-compatible Z80 assembly templates and documents useful external cartridge tools.
 
 ## Contents

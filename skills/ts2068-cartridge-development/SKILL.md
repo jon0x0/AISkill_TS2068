@@ -79,3 +79,7 @@ Provide:
 - static validation plus scripted runtime checkpoints;
 - documented ROM calls, interrupt assumptions, stack location, and bank transitions;
 - hashes and a test history for accepted builds.
+
+## Related experience in the full library
+
+For audio payload conversion or playback scheduling, use `ts2068-audio-development`, based on [speech2ay](https://github.com/jon0x0/speech2ay). For a browser-playable cartridge, use `ts2068-tsrun-web-demo`; its live-module adapter avoids reimplementing TSRun. These are companion workflows, not prerequisites for ordinary cartridge work.

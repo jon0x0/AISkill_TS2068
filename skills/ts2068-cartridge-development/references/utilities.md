@@ -21,6 +21,7 @@
 |---|---|
 | `scripts/pack_dck.py` | Build a DOCK DCK from a flat 64K image or exact 8K chunks; optionally emit a physical BIN. |
 | `scripts/inspect_dck.py` | Strictly parse a DCK, report descriptors/hashes/header, and optionally expand it to 64K. |
+| `scripts/dck_to_picorom.py` | Convert a sparse DCK directly into one contiguous 64K physical ROM image, filling absent/RAM-only chunks. |
 | [zx81-utils `dckls`](https://github.com/ryangray/zx81-utils) | External DCK listing tool whose `-d` mode extracts stored contiguous ROM/RAM spans. |
 | [TS2068 TAP to Cartridge Builder](https://timex-sinclair-projects.github.io/2068-TAP-To-Cart/) | External browser tool designed for converting TS2068 BASIC TAP programs, with optional CODE blocks, into BIN and DCK. |
 | [Retro Pixel Converter](https://factus10.github.io/retro-pixel-converter/) | External browser tool for creating TS2068 ECM bitmap and 8×1 attribute planes and exporting binary data or TAP blocks. |
@@ -76,7 +77,7 @@ dckls -d file.dck
 
 The dump filename records the DCK segment and mapped start address. A contiguous DOCK ROM beginning in chunk 0 becomes `file_DOCK_0x0000.rom`; one beginning in chunk 4 becomes `file_DOCK_0x8000.rom`. The tool emits one `.rom` or `.ram` file per contiguous same-type span, so gaps, memory-type changes, and multiple DCK segments may create multiple outputs. Dump mode requires a named input file.
 
-Do not assume every extracted file is a complete physical image. Eight contiguous DOCK ROM chunks produce one 65536-byte file, but sparse DCKs do not. Use `scripts/inspect_dck.py --flat-output physical.bin --fill 0xFF` when the deliverable must be exactly 64K with defined padding.
+Do not assume every extracted file is a complete physical image. Eight contiguous DOCK ROM chunks produce one 65536-byte file, but sparse DCKs do not. `dckls` does not synthesize missing chunks or combine separated spans into a padded physical image. Use `python scripts/dck_to_picorom.py input.dck physical.bin` for a direct conversion, or `scripts/inspect_dck.py input.dck --flat-output physical.bin --fill 0xFF` when a full inspection report is also wanted. Both default to `$FF` padding. See the PicoROM28 example in [proven-patterns.md](proven-patterns.md#build-the-contiguous-picorom-image).
 
 ## Convert BASIC TAPs in a browser
 
@@ -131,6 +132,8 @@ python scripts\run_fuse_debug.py build\app.dck commands.txt --machine ts2068 --s
 
 Override Fuse with `--fuse PATH`. Defaults are `C:\Program Files (x86)\Fuse\fuse.exe` on Windows, `/Applications/Fuse.app/Contents/MacOS/Fuse` on macOS, and `fuse` elsewhere. The launcher disables sound/loading sound, passes the command-file contents to `--debugger-command`, captures stdout+stderr, and returns Fuse's exit code. A timeout usually means the breakpoint or `exit` path was not reached. Keep breakpoint numbering explicit and archive the command file with the DCK hash and trace.
 
+Fuse 1.6.0 debugger expressions should be kept simple in unattended command files. In this Windows build, both nested dynamic memory expressions such as `print peek peek16 0x7800` and the seemingly simple `print peek 0x7800` form are rejected as invalid debugger commands and can produce repeated GUI error dialogs. Register expressions such as `print z80:pc`, `print z80:sp`, and `print spectrum:frames` are confirmed safe. Do not attempt unattended memory reads until the exact supported dereference grammar has been verified interactively with a disposable Fuse instance. Resolve pointers and memory through a tested helper or temporary in-program diagnostic counters instead; always give every breakpoint command block its own `exit 0` before `end`.
+
 ## Handle Fuse on macOS
 
 Do not state categorically that Fuse for macOS lacks debugger commands. Current official source declares the `debugger_command` setting, preserves `argv` in `fusepb/main.m`, and calls `debugger_command_evaluate` from `fuse.c`. The native app does lack a GUI script-file loader, a `--debugger-command-file` option, and a supported remote command/reply interface.
@@ -171,3 +174,7 @@ Do not treat `header_summary` as complete OS validation.
 4. Compare expanded DCK bytes with intended physical bytes.
 5. Trace startup and required checkpoints under the TS2068 Fuse model.
 6. Validate physical hardware separately, especially RAM descriptors and electrical decoding.
+
+## Audio and browser demo tools
+
+[speech2ay](https://github.com/jon0x0/speech2ay) supplies audio2aydac, speech2ay, ayfit and aydemo, with documented Z80 players and TS2068 exports. Use the audio-development skill for sample timing, optimization and compact storage estimates. Its `web/` adapter demonstrates automatic DCK loading from live TSRun modules; the TSRun web-demo skill records the integration and validation workflow.

@@ -1,5 +1,6 @@
 # Eight Windows into 64K: Making Serious TS2068 Cartridge Software
 
+**When to read:** Use for an approachable cartridge explanation or publication outline; consult the guide for implementation detail. For audio conversion and playback experience, see [audio development](TS2068_AUDIO_GUIDE.md); for browser cartridge demos, see [TSRun embedding](TS2068_BROWSER_DEMOS.md).
 A companion [glossary](TS2068_CARTRIDGE_GLOSSARY.md) defines the specialized terms used in this article.
 
 The cartridge port on the Timex Sinclair 2068 is much more interesting than a simple ROM socket. Used properly, it can support directly executed programs, large media stores, fast loaders, and conversions of software originally written for the ZX Spectrum. The trick is learning to see the machine's memory the way its banking hardware sees it.

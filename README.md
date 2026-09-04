@@ -2,7 +2,21 @@
 
 This folder is a general collection point for reusable AI skills, supporting tools, worked examples, and human-readable technical material for the Timex Sinclair 2068. It is organized so additional TS2068 subjects can be added as independent skills without being folded into the existing cartridge material.
 
-At present, **TS2068 cartridge development is the only complete local skill**. Its material applies equally to original TS2068 cartridge software and to sophisticated ports or conversions of Spectrum programs.
+The library includes independent **TS2068 cartridge development** and **TS2068 audio development** skills. Its material applies equally to original TS2068 cartridge software and to sophisticated ports or conversions of Spectrum programs.
+
+## Find relevant experience
+
+| Need | Entry point |
+|---|---|
+| Convert audio, choose codecs, explain CPU/storage or diagnose optimization | [Audio experience map](TS2068_AUDIO_GUIDE.md) and [speech2ay](https://github.com/jon0x0/speech2ay) |
+| Embed TSRun, automatically load a DCK or publish a browser demo | [Browser demo experience map](TS2068_BROWSER_DEMOS.md) |
+| Design banking, startup or physical cartridge output | [Cartridge guide](TS2068_CARTRIDGE_GUIDE.md) |
+| Reuse a proven memory map | [Worked examples](TS2068_CARTRIDGE_EXAMPLES.md) |
+| Find a tool, resolve a specific question or decode terminology | [Utilities](TS2068_CARTRIDGE_UTILITIES.md), [FAQ](TS2068_CARTRIDGE_FAQ.md), [glossary](TS2068_CARTRIDGE_GLOSSARY.md) |
+
+Read the selected skill and its task-specific references rather than loading
+the entire library. The independent skills cover cartridge development, audio
+development, and TSRun web demos; each directory is a portable skill unit.
 
 ## Skill catalog
 
@@ -25,7 +39,9 @@ AISkill_TS2068/
     │   ├── references/
     │   ├── scripts/
     │   └── assets/
-    └── future-skill-name/
+    ├── ts2068-audio-development/
+    │   └── SKILL.md
+    └── ts2068-tsrun-web-demo/
         └── SKILL.md
 ```
 
@@ -108,3 +124,12 @@ The DCK format is an emulator container and is not byte-for-byte identical to a 
 4. Make bank transitions deterministic and disable interrupts around unsafe intermediate mappings.
 5. Test DCK structure statically, then trace exact execution under the TS2068 model in Fuse.
 6. Verify the final flat binary on the intended cartridge hardware.
+
+
+## Audio development
+
+[TS2068 audio-development skill](skills/ts2068-audio-development/SKILL.md) packages audio2aydac, speech2ay, ayfit and aydemo from [speech2ay](https://github.com/jon0x0/speech2ay), documented Z80 players, TAP/DCK/PicoROM exporters and synthetic examples. Read [Speaking with the TS2068](skills/ts2068-audio-development/assets/audio-tools/docs/speaking-with-the-ts2068.md) for quality, CPU and compression tradeoffs. [Tool instructions](skills/ts2068-audio-development/assets/audio-tools/README.md) and [validation scope](skills/ts2068-audio-development/assets/audio-tools/docs/validation.md) accompany the source.
+
+## Browser demos
+
+The [TSRun web-demo skill](skills/ts2068-tsrun-web-demo/SKILL.md) records automatic DCK loading with live upstream emulator modules, browser sound and input handling, and GitHub Pages deployment. Start with the [experience map](TS2068_BROWSER_DEMOS.md).

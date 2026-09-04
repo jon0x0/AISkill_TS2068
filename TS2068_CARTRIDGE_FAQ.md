@@ -1,5 +1,6 @@
 # TS2068 Cartridge Development FAQ
 
+**When to read:** Use for focused questions about HOME/DOCK/EXROM, ROM coexistence, writable memory and full-64K cartridge use. For audio conversion and playback experience, see [audio development](TS2068_AUDIO_GUIDE.md); for browser cartridge demos, see [TSRun embedding](TS2068_BROWSER_DEMOS.md).
 See the [glossary](TS2068_CARTRIDGE_GLOSSARY.md) for complete acronym and terminology definitions.
 
 ## What is a TS2068 cartridge program?
