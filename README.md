@@ -130,6 +130,29 @@ The DCK format is an emulator container and is not byte-for-byte identical to a 
 
 [TS2068 audio-development skill](skills/ts2068-audio-development/SKILL.md) packages audio2aydac, speech2ay, ayfit and aydemo from [speech2ay](https://github.com/jon0x0/speech2ay), documented Z80 players, TAP/DCK/PicoROM exporters and synthetic examples. Read [Speaking with the TS2068](skills/ts2068-audio-development/assets/audio-tools/docs/speaking-with-the-ts2068.md) for quality, CPU and compression tradeoffs. [Tool instructions](skills/ts2068-audio-development/assets/audio-tools/README.md) and [validation scope](skills/ts2068-audio-development/assets/audio-tools/docs/validation.md) accompany the source.
 
+| Command | Purpose |
+|---|---|
+| `audio2aydac.py` | Packed AY4 digitized audio at 5/6 kHz and DPCM3 at 6 kHz |
+| `speech2ay.py` | Pitch/harmonic spectral fitting with 1, 2 or 3 AY channels, playable with 60 Hz AY parameter updates |
+| `ayfit.py` | Optional stateful waveform/spectrum parameter search using Ayumi |
+| `aydemo.py` | TS2068 Audio Lab: keyboard-selectable multi-sample, multi-codec demonstrations |
+
+`audio2aydac` prepares digitized audio samples and generates callable code and
+data, including TAP and DCK programs. It uses the AY chip's **4-bit volume DAC**,
+compensated for its nonlinear, approximately logarithmic volume levels. AY4
+stores 4-bit sample codes; DPCM3 stores 3-bit differences that reconstruct those
+4-bit DAC codes, rather than changing the chip into a 3-bit DAC.
+
+`speech2ay` fits speech and sound effects to harmonic AY synthesis parameters
+that can be played with **60 Hz parameter updates**. `ayfit` searches for further
+improvements using spectrum, waveform, roughness and periodicity criteria.
+Its acceptance checks can retain the harmonic baseline; an improved numerical
+fit does not guarantee better listening quality.
+
+TS2068 Audio Lab adds sample/codec selection and animation during playback,
+with an optional offline spectrum comparison in the expanded cartridge. See
+the [audio experience map](TS2068_AUDIO_GUIDE.md) for timing and integration guidance.
+
 ## Browser demos
 
 The [TSRun web-demo skill](skills/ts2068-tsrun-web-demo/SKILL.md) records automatic DCK loading with live upstream emulator modules, browser sound and input handling, and GitHub Pages deployment. Start with the [experience map](TS2068_BROWSER_DEMOS.md).
