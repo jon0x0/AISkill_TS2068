@@ -143,11 +143,13 @@ compensated for its nonlinear, approximately logarithmic volume levels. AY4
 stores 4-bit sample codes; DPCM3 stores 3-bit differences that reconstruct those
 4-bit DAC codes, rather than changing the chip into a 3-bit DAC.
 
-`speech2ay` fits speech and sound effects to harmonic AY synthesis parameters
-that can be played with **60 Hz parameter updates**. `ayfit` searches for further
-improvements using spectrum, waveform, roughness and periodicity criteria.
-Its acceptance checks can retain the harmonic baseline; an improved numerical
-fit does not guarantee better listening quality.
+`speech2ay` fits source frames to harmonic AY parameters played at 60 Hz.
+`ayfit` then renders candidate register settings through Ayumi and scores
+spectrum, waveform, periodicity and roughness. In the checked speech set,
+accepted results reduced individual errors by about 0.02–36.9%; it has also
+removed undesirable tones in some listening comparisons. See
+[speech2ay's detailed ayfit description](https://github.com/jon0x0/speech2ay#what-ayfit-can-improve)
+and remember that numerical improvements do not guarantee better speech.
 
 TS2068 Audio Lab adds sample/codec selection and animation during playback,
 with an optional offline spectrum comparison in the expanded cartridge. See
