@@ -2,7 +2,7 @@
 
 **Harmonic AY synthesis for speech and sound effects.**
 
-Tools to convert sampled audio for playback on 8-bit micros, including AY-compensated 4-bit/3-bit digitized audio and harmonic speech synthesis using 60 Hz AY parameter updates, with Z80 source code and TS2068 examples.
+Tools to convert sampled audio for playback on 8-bit micros, including AY-compensated 4-bit/3-bit digitized audio and harmonic speech synthesis using 60 Hz AY parameter updates, with Z80 source code and TS2068 examples. The TS2068 contains a General Instrument **AY-3-8912 Programmable Sound Generator (PSG)**.
 
 **[Run TS2068 Audio Lab in your browser](https://jon0x0.github.io/speech2ay/)**
 
@@ -171,7 +171,7 @@ The packed playback/export layer and DPCM3 stream format are new; DPCM3 is
 **not binary-compatible** with earlier Berzerk speech packages. The optimizer
 worker uses external Ayumi; its license remains with that dependency. Upstream
 Audio2AY is optional and not bundled. The browser demo includes encoded sample
-recordings; see [credits and provenance](https://github.com/jon0x0/speech2ay/blob/main/web/THIRD-PARTY.md). Original WAVs and
+recordings; see [credits and provenance](web/THIRD-PARTY.md). Original WAVs and
 system ROMs are not bundled. No new license is asserted over existing
 project code; establish redistribution terms before publishing to third parties.
 
