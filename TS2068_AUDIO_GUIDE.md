@@ -1,7 +1,7 @@
 # TS2068 audio development: experience map
 
 Use this entry point for sampled speech/effects, AY-compensated digitized audio,
-harmonic synthesis, optimizer regressions, CPU budgets and Audio Lab demos.
+harmonic sound synthesis, optimizer regressions, CPU budgets and Audio Lab demos.
 
 The maintained project is [speech2ay](https://github.com/jon0x0/speech2ay).
 Start with the [audio skill](skills/ts2068-audio-development/SKILL.md), then load

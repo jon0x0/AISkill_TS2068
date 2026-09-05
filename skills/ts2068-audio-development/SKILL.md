@@ -13,7 +13,7 @@ a workflow, diagnosing quality, refreshing the copy or updating documentation.
 ## Select the work
 
 - `audio2aydac.py`: compensated AY4 at 5/6 kHz and DPCM3 at 6 kHz.
-- `speech2ay.py`: harmonic synthesis with one, two or three AY channels.
+- `speech2ay.py`: harmonic sound synthesis with one, two or three AY channels.
 - `ayfit.py`: stateful Ayumi-based parameter optimization. Default conservative
   speech search preserves harmonic structure; `free` explores wider settings.
 - `aydemo.py`: TS2068 Audio Lab sample/codec menu, animation, optional offline

@@ -48,7 +48,7 @@ WAV, assembler, Ayumi or game locations exist on another installation.
   playback before claiming it fixed. Do not replace the reported symptom with
   an unrelated numeric optimization.
 - AY4 maps to nonlinear AY volume levels; DPCM3 reconstructs those 4-bit volume
-  codes from deltas. Harmonic synthesis uses tone/noise/envelope generators,
+  codes from deltas. Harmonic sound synthesis uses tone/noise/envelope generators,
   not the AY as a high-rate DAC.
 - One/two-channel reference streams still have 14-byte frames. Starred menu
   counts estimate a compact 8/11-byte frame format after the same LZ rules;
