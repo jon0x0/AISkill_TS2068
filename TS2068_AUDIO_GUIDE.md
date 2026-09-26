@@ -18,3 +18,11 @@ storage from compact-format estimates. The commands are `audio2aydac`,
 For [web embedding](TS2068_BROWSER_DEMOS.md), use the separate TSRun skill.
 For cartridge paging and physical images, use the
 [cartridge skill](skills/ts2068-cartridge-development/SKILL.md).
+
+## Native chiptunes with graphics
+
+For supplied ZXAYEMUL tunes, read [native AY playback](skills/ts2068-audio-development/references/native-ay.md).
+The portable inspector reports metadata and blocks; the guide covers preserving
+the original driver, FFF5/FFF6 output, approximately 50-Hz scheduling on the
+60-Hz display, looping and shared interrupt/banking budgets. For background
+composition and sprite buffering, use the [graphics skill](skills/ts2068-graphics-animation/SKILL.md).

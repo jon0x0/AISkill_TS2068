@@ -2,12 +2,14 @@
 
 This folder is a general collection point for reusable AI skills, supporting tools, worked examples, and human-readable technical material for the Timex Sinclair 2068. It is organized so additional TS2068 subjects can be added as independent skills without being folded into the existing cartridge material.
 
-The library includes independent **TS2068 cartridge development** and **TS2068 audio development** skills. Its material applies equally to original TS2068 cartridge software and to sophisticated ports or conversions of Spectrum programs.
+The library includes independent **TS2068 cartridge development**, **graphics and animation**, **audio development**, and **TSRun browser demo** skills. Its material applies equally to original TS2068 cartridge software and to sophisticated ports or conversions of Spectrum programs.
 
 ## Find relevant experience
 
 | Need | Entry point |
 |---|---|
+| Convert graphics/gradients, build parallax or buffer animated characters | [Graphics experience map](TS2068_GRAPHICS_GUIDE.md) |
+| Play a native AY tune alongside animation | [Native AY integration](skills/ts2068-audio-development/references/native-ay.md) |
 | Convert audio, choose codecs, explain CPU/storage or diagnose optimization | [Audio experience map](TS2068_AUDIO_GUIDE.md) and [speech2ay](https://github.com/jon0x0/speech2ay) |
 | Embed TSRun, automatically load a DCK or publish a browser demo | [Browser demo experience map](TS2068_BROWSER_DEMOS.md) |
 | Design banking, startup or physical cartridge output | [Cartridge guide](TS2068_CARTRIDGE_GUIDE.md) |
@@ -16,7 +18,7 @@ The library includes independent **TS2068 cartridge development** and **TS2068 a
 
 Read the selected skill and its task-specific references rather than loading
 the entire library. The independent skills cover cartridge development, audio
-development, and TSRun web demos; each directory is a portable skill unit.
+development, graphics and animation, and TSRun web demos; each directory is a portable skill unit.
 
 ## Skill catalog
 
@@ -39,6 +41,8 @@ AISkill_TS2068/
     │   ├── references/
     │   ├── scripts/
     │   └── assets/
+    ├── ts2068-graphics-animation/
+    │   └── SKILL.md
     ├── ts2068-audio-development/
     │   └── SKILL.md
     └── ts2068-tsrun-web-demo/

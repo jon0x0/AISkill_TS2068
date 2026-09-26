@@ -1,0 +1,4 @@
+interface:
+  display_name: "TS2068 Graphics and Animation"
+  short_description: "Convert ECM art and build buffered parallax animation"
+  default_prompt: "Use $ts2068-graphics-animation to convert artwork and implement smooth parallax with buffered characters on the TS2068."

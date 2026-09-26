@@ -63,6 +63,9 @@
   "assets/audio-tools/tsaudio/spectrum.py": "8ff642a84cd21119ffd7124efbd69e3c277ed97ae9bdd30df641a915a6b8d961",
   "assets/audio-tools/tsaudio/spectrum_ui.py": "9b3dc9d2f3242253a4ee6b58ac3309aedf3d0cc7dfc368604f2d5db04d67a4e1",
   "assets/audio-tools/tsaudio/storage.py": "5ebfc512a167bce4c384b632cb8c4c62bdb7759dcb641b4dd8a2f01721e17539",
-  "references/project.md": "a884222066ae9ad741080a4886b631da6c88dbdc1dd15603c5b21339ab7b8b3d",
-  "SKILL.md": "5e169112356bcc20141daaaf84458659c645bb78598ad373572f378ffccf4bc1"
+  "references/project.md": "124c1223a77533c83cc591add5852ec99e2f5d95d74dee3714b157cc93ce5de6",
+  "SKILL.md": "2c6c982138b3bd3869350a60588c727747bcfbb7cedc1c5b6b172e61bc88643d",
+  "references/native-ay.md": "80712bc341a742b8776d962a6e15e9a2479a3886f7b3d8efc3d0697a97663f36",
+  "scripts/inspect_ay.py": "653795688e9598f9603a6ffc99e6493db10aa8b7ce48786f57cbb52e7e59912d",
+  "scripts/test_inspect_ay.py": "a908f56bff7f7500db24a9ce55e7ca3a605cdd7c68bc235c2158e103870ea23f"
 }

@@ -1,0 +1,11 @@
+{
+  "agents/openai.yaml": "ea090ce0db81ddcd0b18a47baa300daf2246ab2c895a00652b8dee2550ce0f9e",
+  "references/buffering.md": "06b070c1c0c5c7e19cbac9fb5149f7bd5bc65ceefb12ccb4e8841dc566884e47",
+  "references/graphics.md": "28690bc6e88cab9f6763117ebf5062f9d9afbec64f0ef09f18e558addf391f12",
+  "references/parallax.md": "3c6bff42e01af921f306f41943b660f03bc8d924f643be2d02a10350628dbb51",
+  "references/validation.md": "bb69a0947c92b7d6b733447be51923a307c83c91742096a1c6dbeb84c7c8f596",
+  "scripts/ecm_art.py": "a83806867f126bf44a1fe448a41baf583416bbd33189cf97a7d30e5ce4888ca6",
+  "scripts/sierra_lite.py": "c14fb8cc672c3ea91988ebad72c67eca79dd94b2401749a15d74c6e65720335f",
+  "scripts/test_ecm_art.py": "2180cfbbcb8df8b24e86a63ab9b9b2e26aede03b7682316f42dd4fdaba6083a9",
+  "SKILL.md": "c91f487930d57bf51713e8cd33d042bd42b274f774f303414ab53b672e645e64"
+}

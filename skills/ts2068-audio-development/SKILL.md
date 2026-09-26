@@ -1,6 +1,6 @@
 ---
 name: ts2068-audio-development
-description: Convert speech and sound effects into AY-compensated DAC or harmonic AY data with speech2ay, improve and validate ayfit optimization, build TS2068 Audio Lab demos, and integrate callable Z80 audio playback.
+description: Convert speech and sound effects into AY-compensated DAC or harmonic AY data with speech2ay, improve and validate ayfit optimization, build TS2068 Audio Lab demos, integrate callable Z80 audio playback, and adapt native ZXAYEMUL chiptunes for concurrent TS2068 animation.
 ---
 
 # TS2068 audio development
@@ -9,6 +9,14 @@ The maintained tools are [speech2ay](https://github.com/jon0x0/speech2ay).
 Use the bundled [toolkit](assets/audio-tools/README.md) for portable work;
 read [project and regression experience](references/project.md) when selecting
 a workflow, diagnosing quality, refreshing the copy or updating documentation.
+
+## Native AY chiptunes
+
+For a supplied `.ay` file or Z80 music driver, read [native AY playback](references/native-ay.md).
+Use `scripts/inspect_ay.py` to inspect song entries and memory blocks without executing
+them. This workflow covers TS2068 port adaptation, 50-Hz scheduling, looping,
+interrupt/bank coexistence and exact register-stream comparison. The toolkit memory
+maps below apply to its DAC/harmonic demos, not automatically to native drivers.
 
 ## Select the work
 
