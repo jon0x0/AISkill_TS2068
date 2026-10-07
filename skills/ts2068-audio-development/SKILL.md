@@ -1,6 +1,6 @@
 ---
 name: ts2068-audio-development
-description: Convert speech and sound effects into AY-compensated DAC or harmonic AY data with speech2ay, improve and validate ayfit optimization, build TS2068 Audio Lab demos, integrate callable Z80 audio playback, and adapt native ZXAYEMUL chiptunes for concurrent TS2068 animation.
+description: Convert speech and effects with speech2ay, audition and edit general-purpose AY register curves in its browser Sound Workshop, validate ayfit optimization, build TS2068 Audio Lab demos, integrate callable Z80 playback, and adapt native ZXAYEMUL chiptunes for concurrent animation.
 ---
 
 # TS2068 audio development
@@ -9,6 +9,15 @@ The maintained tools are [speech2ay](https://github.com/jon0x0/speech2ay).
 Use the bundled [toolkit](assets/audio-tools/README.md) for portable work;
 read [project and regression experience](references/project.md) when selecting
 a workflow, diagnosing quality, refreshing the copy or updating documentation.
+
+## Browser AY player and parameter editor
+
+For browser register playback, curve editing, A/B audition, project files and
+WAV/raw-register export, read [AY Sound Workshop](references/browser-ay-editor.md).
+Developed in Sinistar, the reusable implementation belongs to speech2ay's
+`web/ay-editor/`. It is separate from the older bundled toolkit snapshot and the
+Audio Lab cartridge emulator. Use it for speech, effects and other AY sequences;
+do not assume it loads ZXAYEMUL programs or compressed cartridge data.
 
 ## Native AY chiptunes
 

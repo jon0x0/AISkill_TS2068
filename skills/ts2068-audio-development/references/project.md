@@ -11,6 +11,12 @@ recordings, build scratch, vendored emulator/system ROMs and Git metadata.
 
 ## Load the relevant experience
 
+For the general-purpose browser AY player/parameter editor developed in Sinistar
+and adapted into speech2ay, read [AY Sound Workshop](browser-ay-editor.md). The
+implementation is `web/ay-editor/` in the canonical working project; it is not in
+the c3f50c6 bundled toolkit snapshot. Keep that snapshot's revision and checksum
+manifest unchanged unless actually refreshing its files.
+
 | Task | Read in the bundled toolkit |
 |---|---|
 | Convert WAVs or reproduce a command | `docs/command-line-guide.md`, `tsaudio/cli.py` |

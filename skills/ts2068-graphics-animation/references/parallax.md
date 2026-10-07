@@ -1,5 +1,8 @@
 # Parallax strips and animation
 
+For exact shift conventions, finite-object padding, masks, orientation sets and
+cache/storage tradeoffs, read [precomputed graphics](precomputed-graphics.md).
+
 Represent each plane with its Y range, repeat width, direction, position, phase
 step, cadence, palette policy and overlap order. Thin bands can imply many depths
 without compositing many full screens. Independent clouds, distant terrain, grass

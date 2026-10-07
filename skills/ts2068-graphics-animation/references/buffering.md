@@ -1,4 +1,82 @@
-# Buffered characters and background restoration
+# Scratch-RAM compositing and background restoration
+
+Scratch RAM can hold a small row/rectangle, a retained playfield shadow, or a
+prepared object cache. These have different lifetimes: transient composition can
+be reused after publication, a retained shadow survives into the next picture,
+and a phase cache survives until its source changes. Assign ownership and lifetime
+explicitly rather than treating every apparently free range as interchangeable.
+
+## Compose a complete result before publishing
+
+1. Determine damage from both old and new clipped objects, including fine-phase
+   spill cells, disappearing objects and changes of pose, mask or palette.
+2. Restore the affected background in scratch, or retain proven unchanged regions.
+   Reconstruct from scenery/world data when a saved background has become stale
+   through scrolling or another actor's motion.
+3. Draw all layers intersecting the damaged region in their original order, even
+   when a layer's own position has not changed. A retained rock still needs repair
+   where another object crossed it. Avoid restoring one sprite's saved-under image
+   over a newer overlapping sprite.
+4. Compose bitmap and ECM attributes under an explicit mask/palette policy. Fully
+   transparent cells preserve both planes; partial coverage still shares one 8x1
+   color pair. Resolve that conflict deliberately rather than assuming a bit mask
+   also masks colors.
+5. After composition is complete, compare with the published image if changed-only
+   output is worthwhile, and publish final bytes in a bounded, raster-aware pass.
+   A complete scratch image prevents visible intermediate erase/draw states but
+   does not by itself prevent tearing while the final image is copied.
+
+Keep dirty bounds until publication succeeds. If an update list exceeds its
+capacity or raster budget, retain the complete pending state and use a defined
+retry/fallback; do not discard dirty spans or publish an arbitrary prefix as though
+the picture were complete. Measure compare/list-building costs: in Sinistar they
+could be much larger than final screen writes.
+
+## Choose the buffer and memory contract
+
+Use a row or byte-aligned protected rectangle when its dependencies are local;
+use a retained shadow where overlapping moving objects require wider recomposition.
+A full 256x192 ECM shadow costs 12,288 bytes for bitmap plus attributes before
+masks or metadata. Partial buffers can use linear rows with explicit screen-address
+tables; do not confuse their stride with the display's nonlinear layout. Stage a
+whole overlapping source row when required, or choose a safe traversal direction
+for in-place scrolling. Handle each display plane explicitly.
+
+For every composition phase, list the CPU-visible source, scratch destination,
+code, stack and interrupt state. HOME RAM underneath a mapped DOCK chunk is not
+CPU-accessible merely because the SCLD still displays HOME. Sinistar's banked
+incremental helper therefore used HOME 7BA0 scratch instead of HOME 58xx hidden
+by DOCK2; this is an example of visibility, not an address prescription.
+
+Keep row staging, phase caches, dirty snapshots, update records, temporary stacks
+and ISR/audio workspace disjoint while live. Reuse memory only after its consumer
+finishes, and invalidate retained lookup state when another staging operation
+overwrites it. Sinistar's selected-phase mask lookup required precisely this
+invalidation. Effects reused publication scratch only after normal publication.
+Assert allocation bounds in the build and check bank/stack restoration at runtime.
+
+## Experience across projects
+
+- Beast Horizons composes scenery plus the runner only in protected columns,
+  avoiding a full-width duplicate background copy. The detailed rev09 example
+  below preserves its original dimensions; rev14 moved the protected columns.
+- Sinistar retains bitmap/attribute shadows, repairs old/new damage in layer order,
+  uses masks for incomplete assembly, and emits changed final bytes. It also uses
+  separate front/back object caches: those are prepared sources, not hardware
+  screen pages or substitutes for scene composition.
+- TSWriter retains line layout and pixels, builds glyph/line output with HOME
+  buffers visible under the selected font/render bank, and copies retained lines
+  for scrolling. New glyphs or changed line tails can use guarded local paths;
+  general layout changes fall back to recomposition.
+- Berzerk's XOR renderer demonstrates a related but different optimization:
+  skip identical image work and cache address/mask data while preserving collision
+  bookkeeping. Do not describe that path as a full scratch-shadow compositor or
+  replace it merely to impose this architecture.
+
+See [measured optimization](optimization.md) for evidence and source notes, and
+[precomputed graphics](precomputed-graphics.md) for phase-cache preparation.
+
+## Protected runner example (Beast Horizons rev09)
 
 Build the next background in a protected RAM region, superimpose the new masked
 pose, resolve that region's attributes, then copy only completed output to display.

@@ -1,5 +1,9 @@
 # Validation and demonstrated experience
 
+For later Berzerk, Sinistar, Beast Horizons rev14 and TSWriter optimization lessons,
+read [optimization experience](optimization.md). The rev07-09 results below remain
+historical evidence for their named artifacts.
+
 The source experience is ParallaxDemo / Beast Horizons, preserved revisions 07-09
 (2026-09-26). If that project is available, inspect its archived sources, build
 scripts and reports. This package does not require that checkout and does not

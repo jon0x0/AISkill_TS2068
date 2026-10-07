@@ -1,6 +1,6 @@
 ---
 name: ts2068-graphics-animation
-description: Convert artwork and gradients to TS2068 extended color, build parallax scenery and animated sprites, reduce attribute blocking and color conflicts, and implement buffered character redraws.
+description: Convert artwork and gradients to TS2068 extended color, build parallax scenery and animated sprites, precompute rotated and shifted graphics, reduce attribute conflicts, and optimize retained game and text rendering using measured Z80 timing.
 ---
 
 # TS2068 graphics and animation
@@ -13,10 +13,17 @@ Do not replace an existing working renderer merely to match the example map.
   deblocking, read [graphics conversion](references/graphics.md).
 - For scroll phases, independent layer rates, memory packing and wraparound,
   read [parallax generation](references/parallax.md).
-- For running poses, background restoration, color conflict handling and
-  flicker prevention, read [buffered characters](references/buffering.md).
+- For scratch-RAM composition, retained shadows, running poses, layer restoration,
+  buffer lifetimes and final screen publication, read
+  [scratch compositing and buffering](references/buffering.md).
 - For timings, emulator comparisons and the proven Beast Horizons implementation,
   read [validation and experience](references/validation.md).
+- For profiling, unchanged-image skips, retained composition, incremental text
+  editing and lessons from Berzerk, Sinistar, Beast Horizons and TSWriter,
+  read [optimization experience](references/optimization.md).
+- For circular strip rotation, finite sprite shifts, orientation sets, masks,
+  compiled rows and dynamic phase caches, read
+  [precomputed graphics](references/precomputed-graphics.md).
 
 ## Essential constraints
 

@@ -9,6 +9,7 @@ The library includes independent **TS2068 cartridge development**, **graphics an
 | Need | Entry point |
 |---|---|
 | Convert graphics/gradients, build parallax or buffer animated characters | [Graphics experience map](TS2068_GRAPHICS_GUIDE.md) |
+| Optimize games/text rendering or precompute scrolling objects and data | [Measured optimization](skills/ts2068-graphics-animation/references/optimization.md) and [precomputed graphics](skills/ts2068-graphics-animation/references/precomputed-graphics.md) |
 | Play a native AY tune alongside animation | [Native AY integration](skills/ts2068-audio-development/references/native-ay.md) |
 | Convert audio, choose codecs, explain CPU/storage or diagnose optimization | [Audio experience map](TS2068_AUDIO_GUIDE.md) and [speech2ay](https://github.com/jon0x0/speech2ay) |
 | Embed TSRun, automatically load a DCK or publish a browser demo | [Browser demo experience map](TS2068_BROWSER_DEMOS.md) |

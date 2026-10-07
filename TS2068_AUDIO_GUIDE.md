@@ -19,6 +19,16 @@ For [web embedding](TS2068_BROWSER_DEMOS.md), use the separate TSRun skill.
 For cartridge paging and physical images, use the
 [cartridge skill](skills/ts2068-cartridge-development/SKILL.md).
 
+## Browser AY player and parameter editing
+
+The [AY Sound Workshop](skills/ts2068-audio-development/references/browser-ay-editor.md)
+is the reusable browser system developed for Sinistar and added to speech2ay at
+`web/ay-editor/`. It supports general speech/effect/register sequences, drawn or
+numeric parameter curves, selection loops, A/B audition, undo/redo, JSON projects,
+and WAV/raw-register export. Its standalone TSRun AY core needs no game or system
+ROM; it is separate from the browser Audio Lab cartridge demo. The guide records
+timing/model differences, shared noise/envelope semantics and integration limits.
+
 ## Native chiptunes with graphics
 
 For supplied ZXAYEMUL tunes, read [native AY playback](skills/ts2068-audio-development/references/native-ay.md).
