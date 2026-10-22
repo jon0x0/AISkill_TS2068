@@ -1,6 +1,6 @@
 ---
 name: ts2068-graphics-animation
-description: Convert artwork and gradients to TS2068 extended color, build parallax scenery and animated sprites, precompute rotated and shifted graphics, reduce attribute conflicts, and optimize retained game and text rendering using measured Z80 timing.
+description: Convert TS2068 extended-color artwork, build parallax and buffered animation, optimize retained rendering, and implement PicoVideo 4.2 80-column text with correct banking, palettes and firmware detection.
 ---
 
 # TS2068 graphics and animation
@@ -11,6 +11,8 @@ Do not replace an existing working renderer merely to match the example map.
 
 - For image conversion, gradient skies, transparency, backgrounds and attribute
   deblocking, read [graphics conversion](references/graphics.md).
+- For PicoVideo 80-column text, version/register detection, banked-write capture,
+  palette behavior or upgrade/rollback, read [PicoVideo 4.2](references/picovideo-80-column.md).
 - For scroll phases, independent layer rates, memory packing and wraparound,
   read [parallax generation](references/parallax.md).
 - For scratch-RAM composition, retained shadows, running poses, layer restoration,

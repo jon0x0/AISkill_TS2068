@@ -1,0 +1,4 @@
+interface:
+  display_name: "TS2068 TSPico Storage"
+  short_description: "Add TSPico disk support without ROM dependencies"
+  default_prompt: "Use $ts2068-tspico-development to add TSPico storage to this TS2068 program using the installed firmware's protocol."

@@ -2,12 +2,13 @@
 
 This folder is a general collection point for reusable AI skills, supporting tools, worked examples, and human-readable technical material for the Timex Sinclair 2068. It is organized so additional TS2068 subjects can be added as independent skills without being folded into the existing cartridge material.
 
-The library includes independent **TS2068 cartridge development**, **graphics and animation**, **audio development**, and **TSRun browser demo** skills. Its material applies equally to original TS2068 cartridge software and to sophisticated ports or conversions of Spectrum programs.
+The library includes independent **TS2068 cartridge development**, **TSPico storage**, **graphics and animation**, **audio development**, and **TSRun browser demo** skills. Its material applies equally to original TS2068 cartridge software and to sophisticated ports or conversions of Spectrum programs.
 
 ## Find relevant experience
 
 | Need | Entry point |
 |---|---|
+| Add TSPico disk support to cartridge, RAM-resident or BASIC-assisted programs, including direct protocol implementations | [TSPico storage skill](skills/ts2068-tspico-development/SKILL.md) |
 | Convert graphics/gradients, build parallax or buffer animated characters | [Graphics experience map](TS2068_GRAPHICS_GUIDE.md) |
 | Optimize games/text rendering or precompute scrolling objects and data | [Measured optimization](skills/ts2068-graphics-animation/references/optimization.md) and [precomputed graphics](skills/ts2068-graphics-animation/references/precomputed-graphics.md) |
 | Play a native AY tune alongside animation | [Native AY integration](skills/ts2068-audio-development/references/native-ay.md) |
@@ -19,7 +20,7 @@ The library includes independent **TS2068 cartridge development**, **graphics an
 
 Read the selected skill and its task-specific references rather than loading
 the entire library. The independent skills cover cartridge development, audio
-development, graphics and animation, and TSRun web demos; each directory is a portable skill unit.
+development, TSPico storage, graphics and animation, and TSRun web demos; each directory is a portable skill unit.
 
 ## Skill catalog
 
@@ -46,11 +47,48 @@ AISkill_TS2068/
     │   └── SKILL.md
     ├── ts2068-audio-development/
     │   └── SKILL.md
+    ├── ts2068-tspico-development/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   ├── scripts/
+    │   └── assets/z80/
     └── ts2068-tsrun-web-demo/
         └── SKILL.md
 ```
 
 The `skills/<skill-name>/` boundary is the unit to copy, install, publish, or give to another AI. Human-oriented library documentation remains at the root. Add future skills as peers of `ts2068-cartridge-development`, never by mixing their scripts or references into an existing skill.
+
+## TSPico storage and protocol
+
+For CP/M 2.2 banked RAMDisk, single/double-sided Oliger DSK/TAP interchange,
+MEMDOCK safety and native SD versus RAM snapshots, read
+[banked RAM and disk images](skills/ts2068-tspico-development/references/banked-ram-and-disk-images.md).
+The TSPico skill now includes portable Python disk-image tools. For the separate
+display card, see [PicoVideo 4.2 80-column text](skills/ts2068-graphics-animation/references/picovideo-80-column.md),
+including older V4 banking symptoms and exact firmware backup/rollback.
+The [published CP/M 2.2 project](https://jon0x0.github.io/ts2068/CPM_2068/)
+provides working cartridges, images and a browser environment; a future 3.x
+port must establish its own memory/filesystem contract.
+
+The [TSPico storage skill](skills/ts2068-tspico-development/SKILL.md) explains
+how to add directory browsing, load/save dialogs and file operations to
+cartridge and other TS2068 programs. It includes ROM-independent Z80 drivers
+and a standalone sjasmplus build helper.
+
+- [Integration guide](skills/ts2068-tspico-development/references/integration.md):
+  choose the host API, TAP versus raw files, memory ownership, optional streaming
+  and virtual DOCK versus physical cartridge deployment.
+- [Wire protocol](skills/ts2068-tspico-development/references/protocol.md):
+  original shared-FIFO handshakes/TAP transfers and modern status/SYNC/channel
+  commands, including directory pagination, checksums and write restrictions.
+- [Reusable libraries, ABI and evidence](skills/ts2068-tspico-development/references/assets-and-validation.md):
+  build legacy, modern, or modern-plus-streaming backends, and distinguish the
+  user-confirmed original-firmware hardware result from host-only coverage.
+
+A program can implement disk access entirely from the transfer protocol;
+supported TSPico ROM routines are not required at runtime. The Raspberry Pi
+Pico still runs the SD/filesystem firmware. Original firmware 1.00 uses TAP
+storage, while modern 2.3 exposes raw-file channels; these are separate backends.
 
 ## Cartridge development
 

@@ -82,4 +82,22 @@ Provide:
 
 ## Related experience in the full library
 
+For TSPico SD-card access in cartridge or RAM-resident programs, consult the
+independent `ts2068-tspico-development` skill when available. It contains
+ROM-independent assembly backends, protocol framing and file-dialog guidance.
+Original shared-FIFO firmware uses TAP transfers; modern 2.3 uses separate
+status/SYNC and raw-file channels. Do not send modern SYNC to an unidentified
+legacy device or assume an installed TSPico ROM client is required at runtime.
+Virtual DOCK operation needs TSPico's memory controller enabled; a physical
+PicoROM beside it requires resolving which device drives DOCK.
+
+For TSPico banked SRAM, keep running code/stack outside switched windows and
+reserve cartridge/disk slot pairs explicitly. The CP/M 2.2 example uses slot
+pair 4/5 for the cartridge and twenty/forty 8KiB pages for a 160/320KiB RAMDisk;
+those assignments belong to that application, not every TSPico program. Its
+banked-RAM/disk-image reference is in the TSPico skill. Older PicoVideo can
+capture DOCK writes as visible garbage even when HOME screen RAM is intact;
+the PicoVideo 4.2 reference in the graphics skill explains F4 filtering and
+the 80-column renderer. Diagnose the display copy separately from CPU memory.
+
 For audio payload conversion or playback scheduling, use `ts2068-audio-development`, based on [speech2ay](https://github.com/jon0x0/speech2ay). For a browser-playable cartridge, use `ts2068-tsrun-web-demo`; its live-module adapter avoids reimplementing TSRun. These are companion workflows, not prerequisites for ordinary cartridge work.

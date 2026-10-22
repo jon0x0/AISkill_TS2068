@@ -7,6 +7,7 @@ This directory is the collection point for reusable AI skills related to the Tim
 | Skill | Purpose |
 |---|---|
 | [`ts2068-cartridge-development`](ts2068-cartridge-development/SKILL.md) | Design, build, inspect, port, and debug TS2068 DOCK cartridges, including banking, HOME-RAM transfers, AROS/LROS, ECM media, DCK/BIN creation, and deterministic Fuse validation. |
+| [`ts2068-tspico-development`](ts2068-tspico-development/SKILL.md) | ROM-independent legacy/modern storage, banked SRAM, CP/M RAMDisk, Oliger DSK/TAP tools, native SD and snapshot workflows. |
 | [`ts2068-graphics-animation`](ts2068-graphics-animation/SKILL.md) | Convert ECM graphics and gradients, reduce palette blocks, build parallax and masked animation, and buffer character redraws. |
 | [`ts2068-audio-development`](ts2068-audio-development/SKILL.md) | Convert speech/effects to packed DAC or harmonic AY, optimize parameters, build selectable demos and integrate callable playback and native AY tunes alongside animation. |
 | [`ts2068-tsrun-web-demo`](ts2068-tsrun-web-demo/SKILL.md) | Embed live TSRun modules, automatically load DCKs, handle browser audio/keys and publish GitHub Pages demos. |
