@@ -9,6 +9,8 @@ The library includes independent **TS2068 cartridge development**, **TSPico stor
 | Need | Entry point |
 |---|---|
 | Add TSPico disk support to cartridge, RAM-resident or BASIC-assisted programs, including direct protocol implementations | [TSPico storage skill](skills/ts2068-tspico-development/SKILL.md) |
+| Use expanded TSPico RAM; distinguish stock MEMDOCK banking from custom Spectrum 128 paging | [Expanded-memory decision guide](skills/ts2068-tspico-development/references/expanded-memory.md) |
+| Drive and inspect TSPico memory controllers through USB MicroPython | [USB memory-controller debugging](skills/ts2068-tspico-development/references/usb-memory-debugging.md) |
 | Convert graphics/gradients, build parallax or buffer animated characters | [Graphics experience map](TS2068_GRAPHICS_GUIDE.md) |
 | Optimize games/text rendering or precompute scrolling objects and data | [Measured optimization](skills/ts2068-graphics-animation/references/optimization.md) and [precomputed graphics](skills/ts2068-graphics-animation/references/precomputed-graphics.md) |
 | Play a native AY tune alongside animation | [Native AY integration](skills/ts2068-audio-development/references/native-ay.md) |
@@ -59,6 +61,21 @@ AISkill_TS2068/
 The `skills/<skill-name>/` boundary is the unit to copy, install, publish, or give to another AI. Human-oriented library documentation remains at the root. Add future skills as peers of `ts2068-cartridge-development`, never by mixing their scripts or references into an existing skill.
 
 ## TSPico storage and protocol
+
+### Using TSPico expansion RAM and its memory controller
+
+The [TSPico skill](skills/ts2068-tspico-development/SKILL.md) covers writing
+bank-aware software as well as storage: region/chunk/offset descriptors,
+HOME-resident gateways, safe copies, controller ownership, and
+[USB serial debugging](skills/ts2068-tspico-development/references/usb-memory-debugging.md)
+with temporary MicroPython definitions and bounded hardware probes.
+
+For stock expanded-SRAM access versus custom memory-controller support, read
+[expanded memory](skills/ts2068-tspico-development/references/expanded-memory.md).
+It records lessons from the CP/M and Spectrum 128 ports: stock banking already
+supports large software-managed RAM stores; direct guest paging and ROM-half
+switching need a different policy, while Spectrum aliases and shadow video
+remain hardware limitations.
 
 For CP/M 2.2 banked RAMDisk, single/double-sided Oliger DSK/TAP interchange,
 MEMDOCK safety and native SD versus RAM snapshots, read

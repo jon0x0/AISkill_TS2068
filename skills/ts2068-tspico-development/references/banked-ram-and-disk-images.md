@@ -6,6 +6,13 @@ tools. For packet framing and ordinary application files, also read
 save logic and dual adapter; the six baseline Z80 assets here remain fixed-backend
 libraries, not a drop-in CP/M BIOS or general Oliger controller emulator.
 
+For the stock-versus-custom memory-controller decision, physical addressing,
+Spectrum 128 limitations and safe mode handoff, read
+[expanded memory](expanded-memory.md). The CP/M RAMDisk described below uses
+the existing MEMDOCK command and stock memory policy; its Z80 block driver
+does not imply a replacement Pico PIO controller. Optional direct-SD CP/M
+services are a separate firmware extension, not a requirement for SRAM banking.
+
 ## Firmware and capabilities
 
 | Target | SD-facing interface | RAMDisk persistence |

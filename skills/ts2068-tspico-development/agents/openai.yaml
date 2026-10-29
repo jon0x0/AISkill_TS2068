@@ -1,4 +1,4 @@
 interface:
-  display_name: "TS2068 TSPico Storage"
-  short_description: "Add TSPico disk support without ROM dependencies"
-  default_prompt: "Use $ts2068-tspico-development to add TSPico storage to this TS2068 program using the installed firmware's protocol."
+  display_name: "TS2068 TSPico RAM and Storage"
+  short_description: "Use banked SRAM, SD storage, and USB memory debugging"
+  default_prompt: "Use $ts2068-tspico-development to implement TSPico expansion RAM or storage and debug its memory controller using the installed firmware's interface."

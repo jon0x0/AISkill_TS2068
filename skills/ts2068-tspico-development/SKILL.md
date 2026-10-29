@@ -1,18 +1,38 @@
 ---
 name: ts2068-tspico-development
-description: Add TSPico storage and banked SRAM to TS2068 programs. Select legacy TAP or modern raw-file protocols, build RAMDisk and Oliger-compatible CP/M images, implement ROM-independent transfers, integrate file dialogs, and design optional sequential streaming.
+description: Use TSPico expansion RAM, memory controllers, SD storage, and USB serial debugging from TS2068 software. Choose stock MEMDOCK banking or custom PIO paging, build RAMDisks, and implement ROM-independent legacy or modern file transfers.
 ---
 
 # TS2068 TSPico Development
 
-Implement storage against the installed **Pico firmware's** interface. A
+Use expansion RAM and storage against the installed **Pico firmware's** interface. A
 TSPico ROM extension is an optional Z80 client, not the SD filesystem itself.
 Cartridge programs can supply their entire Z80 driver and UI without calling
 HOME ROM, EXROM, BASIC, or an installed TSPico library. The Pico must still run
 compatible firmware. Loading a DCK through the supplied loader does not make
 the resulting cartridge dependent on that loader at runtime.
 
-## Select the interface
+## Using TSPico expansion RAM and its memory controller
+
+For expanded memory, first read
+[expanded-memory.md](references/expanded-memory.md). It separates stock
+software-managed DOCK banking (including the CP/M RAMDisk) from the custom
+PIO/DMA paging policy used by the Spectrum 128 ports. Stock TSPico already
+has a PIO memory controller: using its SRAM does not inherently require
+replacing it. Extra capacity, transparent guest paging, ROM switching,
+video access, and SD service are separate capabilities.
+
+The reference includes a banked-software interface pattern: keep addresses
+as region/chunk/offset descriptors, run banking gateways from stable HOME,
+split transfers at mapping boundaries, and restore the caller's map before
+returning. Choose this before treating extra SRAM as ordinary flat pointers.
+
+For driving and inspecting the Pico through USB MicroPython, read
+[USB memory-controller debugging](references/usb-memory-debugging.md).
+It covers temporary definitions, dispatcher interruption, read-only status,
+PIO/DMA ownership, reset versus parked-host execution, and bounded ROM probes.
+
+## Select storage and protocol
 
 Read [integration.md](references/integration.md) to choose a storage format,
 host API, memory map, deployment route, and optional modules. Then read the
