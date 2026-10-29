@@ -62,6 +62,10 @@ The `skills/<skill-name>/` boundary is the unit to copy, install, publish, or gi
 
 ## TSPico storage and protocol
 
+- [How the CP/M Oliger-image RAMDisk was implemented](skills/ts2068-tspico-development/references/oliger-ramdisk-implementation.md):
+  CPU memory map, TSPico SRAM allocations, sector/DMA transfers, safe bank
+  restoration, snapshot workflow, adaptation to other programs and pinned source.
+
 ### Using TSPico expansion RAM and its memory controller
 
 The [TSPico skill](skills/ts2068-tspico-development/SKILL.md) covers writing

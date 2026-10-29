@@ -1,5 +1,9 @@
 # TSPico banked SRAM, CP/M RAMDisk and Oliger image interoperability
 
+For the concrete CPU map, slot/page allocation, record-I/O call sequence and
+instructions for reusing the driver in another program, read the
+[CP/M Oliger-image RAMDisk implementation walkthrough](oliger-ramdisk-implementation.md).
+
 Use this for MEMDOCK-backed storage, the CP/M 2.2 port, or compatible disk-image
 tools. For packet framing and ordinary application files, also read
 [protocol.md](protocol.md). The linked CP/M sources contain the advanced loader,

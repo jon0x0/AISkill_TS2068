@@ -41,6 +41,9 @@ applicable [protocol reference](references/protocol.md) before writing I/O.
 For MEMDOCK SRAM, RAMDisk, 160/320KB Oliger DSK interchange, direct SD versus
 RAM snapshots, or CP/M save/reload, read
 [banked RAM and disk images](references/banked-ram-and-disk-images.md).
+For the CP/M implementation's full CPU/SRAM allocation, BIOS/block API and
+adaptation to other hosts, read the
+[Oliger-image RAMDisk implementation walkthrough](references/oliger-ramdisk-implementation.md).
 It includes the reusable Python image tools and the CP/M 2.2 implementation
 boundary. The separate PicoVideo display card is covered by the graphics skill
 when available, or the linked CP/M video guide; it is not TSPico firmware.
