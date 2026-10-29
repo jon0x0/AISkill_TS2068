@@ -148,6 +148,135 @@ modify the RAM disk, while TPSAVE exports it to SD. Direct native-SD service
 is a separate optional firmware feature. CP/M 3.x banking is not implemented
 or validated by the CP/M 2.2 example.
 
+## Machine-code bank management: Spectrum 128 and TSPico 128
+
+This section applies to the original Spectrum 128 and the modified TSPico
+128 ROM/controller pair, not stock MEMDOCK. Use a common bank-manager ABI
+with a target-specific paging backend; do not treat the two interfaces as
+interchangeable just because both access external RAM.
+
+| Program part | Placement and ownership |
+|---|---|
+| Bank manager, copy gateways, common state, interrupt handler and stack | Fixed RAM below C000; on the SD personality avoid protected A000-BFFF |
+| Banked assets, datasets or code overlays | Application-owned 16 KiB banks, visible at C000-FFFF one at a time |
+| ROM/editor and RAM-disk workspaces | Reserve their live banks before allocating application payloads; bank 7 needs particular care, and RAM-disk files can occupy other banks too |
+
+A persistent reference needs `(bank, address)` or `(bank, offset)`, not just
+a CPU pointer. For example, bank 3/C200 means offset 0200 in that particular
+bank. Several overlays may all be linked at C000, provided each is stored in
+its own allocated bank. Their addresses are valid only while that bank is
+selected. Bank numbers in an example layout do not establish which banks
+are actually free when returning to BASIC or using the ROM RAM disk.
+
+### Paging byte and ROM cooperation
+
+| Control | Original Spectrum 128 | Tested TSPico 128 controller |
+|---|---|---|
+| Paging output | 7FFD | Private low port 0F; 7F0F matches the modified ROM |
+| Bits 0-2 | RAM bank 0-7 at C000 | Same logical bank selection |
+| Bit 3 | Display bank 5/7 | No native shadow-screen implementation |
+| Bit 4 | ROM selection | ROM-half latch |
+| Bit 5 | Disable further paging | Paging lock implemented; do not set during ordinary bank management |
+| ROM software shadow | BANK_M at 5B5C | Same variable in the modified 128 ROM |
+
+BANK_M is a software record, not hardware bank-register readback. Keep it
+synchronized when cooperating with ROM/BASIC. Code taking complete ownership
+can maintain another shadow, but must reconcile the ROM's copy before calling
+ROM services. A lock bit already latched in hardware cannot be undone by
+clearing BANK_M. Do not rely on a helper that guesses state from a stale copy.
+
+Illustrative bank selector, assembled in fixed RAM. It deliberately requires
+the caller to have disabled interrupts; it is not a complete BASIC wrapper:
+
+```z80
+BANK_M equ $5B5C
+PAGING_PORT equ $7FFD       ; original Spectrum 128
+; Use $7F0F instead for the custom TSPico 128 personality.
+
+; A = bank 0..7. Carry clear = success; set = invalid bank or locked.
+; Clobbers AF, BC. Preserves DE, HL, IX, IY and interrupt state.
+; Code, stack AND return continuation must remain visible below C000.
+; BANK_M must accurately reflect the current paging state.
+select_bank:
+    cp 8
+    jr nc,bank_error
+    ld b,a
+    ld a,(BANK_M)
+    bit 5,a
+    jr nz,bank_error
+    and $18                ; preserve ROM and logical screen selection
+    or b
+    ld (BANK_M),a
+    ld bc,PAGING_PORT
+    out (c),a
+    or a                   ; clear carry
+    ret
+bank_error:
+    scf
+    ret
+```
+
+Desktop Z80 execution checked this selector for both ports, all 256 input
+bytes and all 64 ordinary paging-shadow values (32,768 cases), including
+carry, no output on error, shadow updates and preserved registers. This
+checks the routine's contract, not Pico bus timing or a BASIC-callable wrapper.
+
+This routine changes only the RAM bank for valid ordinary 128 paging values.
+Preserving bit 3 on TSPico does not implement the missing screen function.
+Other Spectrum models, all-RAM configurations or unrelated reserved bits need
+their own backend. The TSPico backend needs its controller already running:
+stock firmware does not turn these private OUTs into bank selections.
+Python does not process each paging request; PIO captures it and DMA passes
+the selector to the address PIO, after which CPU accesses use SRAM directly.
+
+### Data access and bank boundaries
+
+Save the caller's full paging byte, select the payload bank, read it directly
+or copy a span to a fixed buffer, then restore the saved mapping before
+returning. Selection changes address decoding; it does not copy 16 KiB.
+Restore the ROM/screen selection too, not just the previous three bank bits.
+Every routine allowed to change paging must maintain the same shadow/lock rules.
+
+For data reaching FFFF, transfer only the remaining span, select the next
+bank from the allocation table, and continue at C000. Do not allow LDIR's
+16-bit address wrap to select the next bank implicitly. A copy between two
+different pageable banks needs a common buffer or an equivalent staged copy;
+the one C000 window cannot expose both simultaneously. Account for the real
+Spectrum's bank-2/5 aliases when choosing any fixed buffer; the TSPico copies
+do not have those alias semantics.
+
+### Banked calls, nesting and BASIC entry
+
+A fixed-memory trampoline saves the current map, selects the target bank,
+CALLs its entry (for example C000), then restores the caller's map after RET.
+The stack, including the return address, stays fixed. A banked routine must
+not directly page itself away and then RET through whatever replaced it.
+
+For nested calls A -> B -> C, keep a stack of saved mappings associated with
+the call frames. One global "previous bank" variable is insufficient. The
+common dispatcher, mapping stack, arguments and return-value storage must
+remain accessible at every nesting level. Give the call ABI explicit register,
+interrupt and workspace ownership rules.
+
+Short copies can run under DI; long routines need an interrupt handler whose
+code, vector, stack and data remain valid in every allowed bank. An ISR must
+not independently page memory used by an interrupted transfer unless the
+bank manager explicitly supports that reentrancy. Preserve the entry interrupt
+state rather than unconditionally EI on return.
+
+Before calling from BASIC, reserve fixed memory for the wrapper and its private
+stack, save BASIC's SP and paging state in stable storage, and move SP before
+removing any bank containing BASIC's stack. Restore the original map before
+restoring SP and returning through BASIC's saved frame. CLEAR can reserve
+space; it does not move the active stack, save paging, or assign bank ownership.
+On zx128sd, A000-BFFF belongs to the service: neither the wrapper nor its
+private stack or copy buffers may use it. Use the cooperative gateway for SD
+instead of issuing independent disk I/O while paging owns the shared resources.
+
+The original Spectrum's fixed bank-5 screen and bank-2 RAM aliases, and its
+bank-7 display switch, cannot be assumed by this TSPico port. A paging-port
+substitution alone is therefore not a general machine-code program conversion.
+
 ## Custom memory pattern: the Spectrum 128 lesson
 
 The 128 port presents HOME 4000-BFFF as fixed working/display RAM and selects
