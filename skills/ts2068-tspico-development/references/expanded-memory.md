@@ -148,12 +148,25 @@ modify the RAM disk, while TPSAVE exports it to SD. Direct native-SD service
 is a separate optional firmware feature. CP/M 3.x banking is not implemented
 or validated by the CP/M 2.2 example.
 
-## Machine-code bank management: Spectrum 128 and TSPico 128
+## Machine-code bank management: Spectrum 128 and TSPico expansion RAM
 
-This section applies to the original Spectrum 128 and the modified TSPico
-128 ROM/controller pair, not stock MEMDOCK. Use a common bank-manager ABI
-with a target-specific paging backend; do not treat the two interfaces as
-interchangeable just because both access external RAM.
+TSPico has 512 KiB of external SRAM. The Spectrum 128 port is one particular
+use of that expansion, not a description of the board's capacity. Structure
+machine-code programs around a common bank-manager ABI with separate backends:
+
+| Target | Machine-code bank-selection mechanism | Addressable layout |
+|---|---|---|
+| Original Spectrum 128 | OUT to 7FFD, maintaining BANK_M when using its ROM | Eight logical 16 KiB banks; selected bank at C000-FFFF, with fixed bank-5/2 views |
+| Stock TSPico 512 KiB expansion | MEMDOCK command through the Pico link, followed by SCLD F4/FF selection | Eight 64 KiB SRAM regions, exposed in fixed-address 8 KiB chunks; reserve resident code and existing allocations |
+| Spectrum 128 port on TSPico | Patched OUT to private 0F with custom PIO/DMA controller | Eight selected 16 KiB SRAM windows plus separate fixed HOME RAM; not the whole chip and not true Spectrum aliases |
+
+For stock TSPico, use the region/chunk/offset handles and HOME transfer gateway
+described above. The same data-access and overlay-call design applies, but
+the backend must exchange and complete MEMDOCK commands and restore F4/FF;
+the Spectrum paging-byte routine below is not its implementation. Do not
+treat the backends as interchangeable merely because both access banked RAM.
+
+The following concrete C000-window layout is for the two Spectrum 128 targets:
 
 | Program part | Placement and ownership |
 |---|---|
@@ -168,9 +181,9 @@ its own allocated bank. Their addresses are valid only while that bank is
 selected. Bank numbers in an example layout do not establish which banks
 are actually free when returning to BASIC or using the ROM RAM disk.
 
-### Paging byte and ROM cooperation
+### Spectrum 128 paging byte and ROM cooperation
 
-| Control | Original Spectrum 128 | Tested TSPico 128 controller |
+| Control | Original Spectrum 128 | Spectrum 128 port on TSPico |
 |---|---|---|
 | Paging output | 7FFD | Private low port 0F; 7F0F matches the modified ROM |
 | Bits 0-2 | RAM bank 0-7 at C000 | Same logical bank selection |
@@ -191,7 +204,7 @@ the caller to have disabled interrupts; it is not a complete BASIC wrapper:
 ```z80
 BANK_M equ $5B5C
 PAGING_PORT equ $7FFD       ; original Spectrum 128
-; Use $7F0F instead for the custom TSPico 128 personality.
+; Use $7F0F instead for the Spectrum 128 port on TSPico.
 
 ; A = bank 0..7. Carry clear = success; set = invalid bank or locked.
 ; Clobbers AF, BC. Preserves DE, HL, IX, IY and interrupt state.
@@ -224,12 +237,20 @@ checks the routine's contract, not Pico bus timing or a BASIC-callable wrapper.
 This routine changes only the RAM bank for valid ordinary 128 paging values.
 Preserving bit 3 on TSPico does not implement the missing screen function.
 Other Spectrum models, all-RAM configurations or unrelated reserved bits need
-their own backend. The TSPico backend needs its controller already running:
+their own backend. The Spectrum-port backend needs its controller already running:
 stock firmware does not turn these private OUTs into bank selections.
 Python does not process each paging request; PIO captures it and DMA passes
 the selector to the address PIO, after which CPU accesses use SRAM directly.
 
 ### Data access and bank boundaries
+
+On stock TSPico, the corresponding operation saves the selected region and
+F4/FF map, maps an allocated chunk, copies or reads a span, then restores the
+caller. Split at its 8 KiB chunk boundaries, and select another region when
+needed. There is no Spectrum BANK_M or automatic 7FFD-style latch in that
+backend. Use the complete stock gateway sequence above.
+
+For the Spectrum 128 targets, the equivalent operation is:
 
 Save the caller's full paging byte, select the payload bank, read it directly
 or copy a span to a fixed buffer, then restore the saved mapping before
